@@ -107,4 +107,47 @@ class GradeController extends Controller
         return redirect()->route('grades.index')
             ->with('success', 'Grade updated successfully.');
     }
+
+    public function myGrades(Request $request)
+    {
+        $student = auth()->user()->student;
+
+        $enrollments = $student->enrollments()
+            ->with('course', 'grade')
+            ->when($request->search, function ($query, $search) {
+                $query->whereHas('course', function ($q) use ($search) {
+                    $q->where('name', 'like', "%$search%");
+                });
+            })
+            ->when($request->semester, function ($query, $semester) {
+                $query->where('semester', $semester);
+            })
+            ->when($request->academic_year, function ($query, $academicYear) {
+                $query->where('academic_year', $academicYear);
+            })
+            ->paginate(15);
+
+        return view('grades.student-index', compact('enrollments'));
+    }
+
+    public function lecturerIndex(Request $request)
+    {
+        $lecturer = auth()->user()->lecturer;
+
+        $enrollments = Enrollment::whereHas('course', function ($query) use ($lecturer) {
+            $query->where('lecturer_id', $lecturer->id);
+        })
+        ->with('student', 'course', 'grade')
+        ->when($request->search, function ($query, $search) {
+            $query->whereHas('student', function ($q) use ($search) {
+                $q->where('full_name', 'like', "%$search%");
+            });
+        })
+        ->when($request->course_id, function ($query, $courseId) {
+            $query->where('course_id', $courseId);
+        })
+        ->paginate(15);
+
+        return view('grades.lecturer-index', compact('enrollments'));
+    }
 }

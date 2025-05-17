@@ -9,6 +9,9 @@
         <a href="{{ route('enrollments.registration') }}" class="btn btn-sm btn-primary">
             <i class="fas fa-plus me-1"></i> Register for Courses
         </a>
+        <a href="{{ route('enrollments.downloadPdf') }}" class="btn btn-sm btn-secondary ms-2">
+            <i class="fas fa-file-pdf me-1"></i> Download PDF
+        </a>
     </div>
 </div>
 

@@ -56,12 +56,14 @@ Route::middleware(['auth'])->group(function () {
     // Grade Routes
     Route::resource('grades', GradeController::class);
     Route::get('/my-grades', [GradeController::class, 'myGrades'])->name('grades.my');
+    Route::get('/lecturer-grades', [GradeController::class, 'lecturerIndex'])->name('grades.lecturer');
     
     // Schedule Routes
     Route::resource('schedules', ScheduleController::class);
     
     // Enrollment Routes
     Route::get('/my-enrollments', [EnrollmentController::class, 'myEnrollments'])->name('enrollments.my');
-    Route::get('/course-registration', [EnrollmentController::class, 'registrationForm'])->name('enrollments.registration');
+    Route::get('/course-registration', [EnrollmentController::class, 'registration'])->name('enrollments.registration');
     Route::post('/course-registration', [EnrollmentController::class, 'register'])->name('enrollments.register');
+    Route::get('/enrollments/download-pdf', [EnrollmentController::class, 'downloadPdf'])->name('enrollments.downloadPdf');
 });

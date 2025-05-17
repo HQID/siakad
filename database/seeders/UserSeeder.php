@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
         ]);
 
         // Create lecturer users
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             User::create([
                 'name' => 'lecturer' . $i,
                 'email' => 'lecturer' . $i . '@example.com',
@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
         }
 
         // Create student users
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             User::create([
                 'name' => 'student' . $i,
                 'email' => 'student' . $i . '@example.com',

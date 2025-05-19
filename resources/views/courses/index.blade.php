@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Courses - Academic Information System')
+@section('title', 'Daftar Mata Kuliah - Sistem Informasi Akademik Universitas Tadulako')
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Courses</h1>
+    <h1 class="h2">Daftar Mata Kuliah</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
         <a href="{{ route('courses.create') }}" class="btn btn-sm btn-primary">
-            <i class="fas fa-plus me-1"></i> Add New Course
+            <i class="fas fa-plus me-1"></i> Tambah Mata Kuliah Baru
         </a>
     </div>
 </div>
@@ -17,7 +17,7 @@
         <form action="{{ route('courses.index') }}" method="GET" class="row g-3">
             <div class="col-md-4">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search by name or code" name="search" value="{{ request('search') }}">
+                    <input type="text" class="form-control" placeholder="Cari berdasarkan nama atau kode" name="search" value="{{ request('search') }}">
                     <button class="btn btn-outline-secondary" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
@@ -25,7 +25,7 @@
             </div>
             <div class="col-md-3">
                 <select name="semester" class="form-select" onchange="this.form.submit()">
-                    <option value="">All Semesters</option>
+                    <option value="">Semua Semester</option>
                     @foreach(\App\Models\Course::select('semester')->distinct()->pluck('semester') as $semester)
                         <option value="{{ $semester }}" {{ request('semester') == $semester ? 'selected' : '' }}>{{ $semester }}</option>
                     @endforeach
@@ -33,7 +33,7 @@
             </div>
             <div class="col-md-3">
                 <select name="lecturer_id" class="form-select" onchange="this.form.submit()">
-                    <option value="">All Lecturers</option>
+                    <option value="">Semua Dosen</option>
                     @foreach(\App\Models\Lecturer::orderBy('full_name')->get() as $lecturer)
                         <option value="{{ $lecturer->id }}" {{ request('lecturer_id') == $lecturer->id ? 'selected' : '' }}>{{ $lecturer->full_name }}</option>
                     @endforeach
@@ -48,13 +48,13 @@
     <x-table>
         <x-slot name="header">
             <th>#</th>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Credits</th>
+            <th>Kode</th>
+            <th>Nama</th>
+            <th>SKS</th>
             <th>Semester</th>
-            <th>Lecturer</th>
-            <th>Students</th>
-            <th>Actions</th>
+            <th>Dosen</th>
+            <th>Mahasiswa</th>
+            <th>Aksi</th>
         </x-slot>
         
         @forelse($courses as $index => $course)
@@ -64,7 +64,7 @@
                 <td>{{ $course->name }}</td>
                 <td>{{ $course->credits }}</td>
                 <td>{{ $course->semester }}</td>
-                <td>{{ $course->lecturer ? $course->lecturer->full_name : 'Not Assigned' }}</td>
+                <td>{{ $course->lecturer ? $course->lecturer->full_name : 'Belum Ditentukan' }}</td>
                 <td>{{ $course->enrollments_count ?? 0 }}</td>
                 <td>
                     <div class="btn-group" role="group">
@@ -84,19 +84,19 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteModalLabel{{ $course->id }}">Confirm Delete</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <h5 class="modal-title" id="deleteModalLabel{{ $course->id }}">Konfirmasi Hapus</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                                 </div>
                                 <div class="modal-body">
-                                    Are you sure you want to delete course <strong>{{ $course->name }}</strong>?
-                                    <p class="text-danger mt-2">This action cannot be undone and will delete all related data.</p>
+                                    Apakah Anda yakin ingin menghapus mata kuliah <strong>{{ $course->name }}</strong>?
+                                    <p class="text-danger mt-2">Tindakan ini tidak dapat dibatalkan dan akan menghapus semua data terkait.</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                     <form action="{{ route('courses.destroy', $course) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-danger">Hapus</button>
                                     </form>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
             </tr>
         @empty
             <tr>
-                <td colspan="8" class="text-center">No courses found.</td>
+                <td colspan="8" class="text-center">Tidak ada mata kuliah ditemukan.</td>
             </tr>
         @endforelse
     </x-table>

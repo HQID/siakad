@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Schedules - Academic Information System')
+@section('title', 'Daftar Jadwal - Sistem Informasi Akademik Universitas Tadulako')
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Schedules</h1>
+    <h1 class="h2">Daftar Jadwal</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
         <a href="{{ route('schedules.create') }}" class="btn btn-sm btn-primary">
-            <i class="fas fa-plus me-1"></i> Add New Schedule
+            <i class="fas fa-plus me-1"></i> Tambah Jadwal Baru
         </a>
     </div>
 </div>
@@ -17,15 +17,15 @@
         <form action="{{ route('schedules.index') }}" method="GET" class="row g-3">
             <div class="col-md-3">
                 <select name="day" class="form-select" onchange="this.form.submit()">
-                    <option value="">All Days</option>
-                    @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] as $day)
+                    <option value="">Semua Hari</option>
+                    @foreach(['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'] as $day)
                         <option value="{{ $day }}" {{ request('day') == $day ? 'selected' : '' }}>{{ $day }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="col-md-3">
                 <select name="course_id" class="form-select" onchange="this.form.submit()">
-                    <option value="">All Courses</option>
+                    <option value="">Semua Mata Kuliah</option>
                     @foreach(\App\Models\Course::orderBy('name')->get() as $course)
                         <option value="{{ $course->id }}" {{ request('course_id') == $course->id ? 'selected' : '' }}>{{ $course->name }}</option>
                     @endforeach
@@ -33,7 +33,7 @@
             </div>
             <div class="col-md-3">
                 <select name="room" class="form-select" onchange="this.form.submit()">
-                    <option value="">All Rooms</option>
+                    <option value="">Semua Ruangan</option>
                     @foreach(\App\Models\Schedule::select('room')->distinct()->pluck('room') as $room)
                         <option value="{{ $room }}" {{ request('room') == $room ? 'selected' : '' }}>{{ $room }}</option>
                     @endforeach
@@ -48,13 +48,13 @@
     <x-table>
         <x-slot name="header">
             <th>#</th>
-            <th>Course</th>
-            <th>Day</th>
-            <th>Time</th>
-            <th>Room</th>
-            <th>Lecturer</th>
-            <th>Academic Year</th>
-            <th>Actions</th>
+            <th>Mata Kuliah</th>
+            <th>Hari</th>
+            <th>Waktu</th>
+            <th>Ruangan</th>
+            <th>Dosen</th>
+            <th>Tahun Akademik</th>
+            <th>Aksi</th>
         </x-slot>
         
         @forelse($schedules as $index => $schedule)
@@ -64,7 +64,7 @@
                 <td>{{ $schedule->day }}</td>
                 <td>{{ $schedule->start_time->format('H:i') }} - {{ $schedule->end_time->format('H:i') }}</td>
                 <td>{{ $schedule->room }}</td>
-                <td>{{ $schedule->course->lecturer ? $schedule->course->lecturer->full_name : 'Not Assigned' }}</td>
+                <td>{{ $schedule->course->lecturer ? $schedule->course->lecturer->full_name : 'Belum Ditentukan' }}</td>
                 <td>{{ $schedule->academic_year }}, {{ $schedule->semester }}</td>
                 <td>
                     <div class="btn-group" role="group">
@@ -81,19 +81,19 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteModalLabel{{ $schedule->id }}">Confirm Delete</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <h5 class="modal-title" id="deleteModalLabel{{ $schedule->id }}">Konfirmasi Hapus</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                                 </div>
                                 <div class="modal-body">
-                                    Are you sure you want to delete this schedule?
-                                    <p class="text-danger mt-2">This action cannot be undone.</p>
+                                    Apakah Anda yakin ingin menghapus jadwal ini?
+                                    <p class="text-danger mt-2">Tindakan ini tidak dapat dibatalkan.</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                     <form action="{{ route('schedules.destroy', $schedule) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-danger">Hapus</button>
                                     </form>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
             </tr>
         @empty
             <tr>
-                <td colspan="8" class="text-center">No schedules found.</td>
+                <td colspan="8" class="text-center">Tidak ada jadwal ditemukan.</td>
             </tr>
         @endforelse
     </x-table>
@@ -115,19 +115,19 @@
 
 <x-card class="mt-4">
     <x-slot name="header">
-        <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i> Weekly Schedule</h5>
+        <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i> Jadwal Mingguan</h5>
     </x-slot>
     
     <div class="table-responsive">
         <table class="table table-bordered">
             <thead class="table-light">
                 <tr>
-                    <th width="15%">Time / Day</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
+                    <th width="15%">Waktu / Hari</th>
+                    <th>Senin</th>
+                    <th>Selasa</th>
+                    <th>Rabu</th>
+                    <th>Kamis</th>
+                    <th>Jumat</th>
                 </tr>
             </thead>
             <tbody>
@@ -139,7 +139,7 @@
                         '15:00 - 16:40'
                     ];
                     
-                    $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+                    $days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
                     
                     $allSchedules = \App\Models\Schedule::with('course.lecturer')->get()->groupBy('day');
                 @endphp
@@ -162,8 +162,8 @@
                                             <div class="p-2 bg-primary text-white rounded mb-1">
                                                 <strong>{{ $schedule->course->code }}</strong><br>
                                                 {{ $scheduleStart }} - {{ $scheduleEnd }}<br>
-                                                Room: {{ $schedule->room }}<br>
-                                                <small>{{ $schedule->course->lecturer ? $schedule->course->lecturer->full_name : 'No Lecturer' }}</small>
+                                                Ruangan: {{ $schedule->room }}<br>
+                                                <small>{{ $schedule->course->lecturer ? $schedule->course->lecturer->full_name : 'Belum Ditentukan' }}</small>
                                             </div>
                                         @endif
                                     @endforeach

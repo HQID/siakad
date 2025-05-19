@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'Course Details - Academic Information System')
+@section('title', 'Detail Mata Kuliah - Sistem Informasi Akademik Universitas Tadulako')
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Course Details</h1>
+    <h1 class="h2">Detail Mata Kuliah</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
         <a href="{{ route('courses.edit', $course) }}" class="btn btn-sm btn-warning me-2">
             <i class="fas fa-edit me-1"></i> Edit
         </a>
         <a href="{{ route('courses.index') }}" class="btn btn-sm btn-secondary">
-            <i class="fas fa-arrow-left me-1"></i> Back to Courses
+            <i class="fas fa-arrow-left me-1"></i> Kembali ke Daftar Mata Kuliah
         </a>
     </div>
 </div>
@@ -19,7 +19,7 @@
     <div class="col-md-4">
         <x-card>
             <x-slot name="header">
-                <h5 class="mb-0"><i class="fas fa-book me-2"></i> Course Information</h5>
+                <h5 class="mb-0"><i class="fas fa-book me-2"></i> Informasi Mata Kuliah</h5>
             </x-slot>
             
             <div class="text-center mb-4">
@@ -28,7 +28,7 @@
                 </div>
                 <h4>{{ $course->name }}</h4>
                 <p class="text-muted mb-1">{{ $course->code }}</p>
-                <p class="badge bg-primary">{{ $course->credits }} Credits</p>
+                <p class="badge bg-primary">{{ $course->credits }} SKS</p>
             </div>
             
             <ul class="list-group list-group-flush">
@@ -37,18 +37,18 @@
                     <span>{{ $course->semester }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><i class="fas fa-chalkboard-teacher me-2"></i> Lecturer</span>
-                    <span>{{ $course->lecturer ? $course->lecturer->full_name : 'Not Assigned' }}</span>
+                    <span><i class="fas fa-chalkboard-teacher me-2"></i> Dosen</span>
+                    <span>{{ $course->lecturer ? $course->lecturer->full_name : 'Belum Ditentukan' }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><i class="fas fa-users me-2"></i> Enrolled Students</span>
+                    <span><i class="fas fa-users me-2"></i> Mahasiswa Terdaftar</span>
                     <span>{{ $course->enrollments()->count() }}</span>
                 </li>
             </ul>
             
             @if($course->description)
                 <div class="mt-3">
-                    <h6>Description</h6>
+                    <h6>Deskripsi</h6>
                     <p>{{ $course->description }}</p>
                 </div>
             @endif
@@ -56,7 +56,7 @@
         
         <x-card class="mt-4">
             <x-slot name="header">
-                <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i> Schedule</h5>
+                <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i> Jadwal</h5>
             </x-slot>
             
             @if($course->schedules()->count() > 0)
@@ -68,7 +68,7 @@
                                 <span class="badge bg-info">{{ $schedule->start_time->format('H:i') }} - {{ $schedule->end_time->format('H:i') }}</span>
                             </div>
                             <div class="d-flex justify-content-between align-items-center mt-2">
-                                <span><i class="fas fa-map-marker-alt me-2"></i> Room {{ $schedule->room }}</span>
+                                <span><i class="fas fa-map-marker-alt me-2"></i> Ruangan {{ $schedule->room }}</span>
                                 <span class="badge bg-secondary">{{ $schedule->academic_year }}, {{ $schedule->semester }}</span>
                             </div>
                         </li>
@@ -77,14 +77,14 @@
             @else
                 <div class="text-center py-3">
                     <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
-                    <p>No schedules have been set for this course.</p>
+                    <p>Belum ada jadwal untuk mata kuliah ini.</p>
                 </div>
             @endif
             
             @if(auth()->user()->isAdmin())
                 <x-slot name="footer">
                     <a href="{{ route('schedules.create', ['course_id' => $course->id]) }}" class="btn btn-sm btn-primary">
-                        <i class="fas fa-plus me-1"></i> Add Schedule
+                        <i class="fas fa-plus me-1"></i> Tambah Jadwal
                     </a>
                 </x-slot>
             @endif
@@ -94,17 +94,17 @@
     <div class="col-md-8">
         <x-card>
             <x-slot name="header">
-                <h5 class="mb-0"><i class="fas fa-user-graduate me-2"></i> Enrolled Students</h5>
+                <h5 class="mb-0"><i class="fas fa-user-graduate me-2"></i> Mahasiswa Terdaftar</h5>
             </x-slot>
             
             <x-table>
                 <x-slot name="header">
                     <th>NIM</th>
-                    <th>Name</th>
-                    <th>Academic Year</th>
+                    <th>Nama</th>
+                    <th>Tahun Akademik</th>
                     <th>Semester</th>
                     <th>Status</th>
-                    <th>Grade</th>
+                    <th>Nilai</th>
                 </x-slot>
                 
                 @forelse($course->enrollments()->with(['student', 'grade'])->get() as $enrollment)
@@ -124,13 +124,13 @@
                                     {{ $enrollment->grade->grade_letter }}
                                 </span>
                             @else
-                                <span class="badge bg-secondary">Not Graded</span>
+                                <span class="badge bg-secondary">Belum Dinilai</span>
                             @endif
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center">No students enrolled yet.</td>
+                        <td colspan="6" class="text-center">Belum ada mahasiswa yang terdaftar.</td>
                     </tr>
                 @endforelse
             </x-table>
@@ -138,7 +138,7 @@
         
         <x-card class="mt-4">
             <x-slot name="header">
-                <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i> Grade Distribution</h5>
+                <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i> Distribusi Nilai</h5>
             </x-slot>
             
             @php
@@ -186,7 +186,7 @@
                     <div class="col-md-4">
                         <div class="card bg-light">
                             <div class="card-body text-center">
-                                <h6 class="card-title text-muted">Class Average</h6>
+                                <h6 class="card-title text-muted">Rata-rata Kelas</h6>
                                 <h3 class="mb-0">
                                     @php
                                         $totalPoints = 0;
@@ -208,7 +208,7 @@
             @else
                 <div class="text-center py-3">
                     <i class="fas fa-chart-bar fa-3x text-muted mb-3"></i>
-                    <p>No grades have been recorded for this course yet.</p>
+                    <p>Belum ada nilai yang tercatat untuk mata kuliah ini.</p>
                 </div>
             @endif
         </x-card>

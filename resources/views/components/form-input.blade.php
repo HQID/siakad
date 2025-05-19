@@ -20,7 +20,7 @@
             {{ $required ? 'required' : '' }}
             {{ $attributes }}
         >
-            <option value="">Select {{ $label }}</option>
+            <option value="">Pilih {{ $label }}</option>
             @foreach($options as $optionValue => $optionLabel)
                 <option value="{{ $optionValue }}" {{ old($name, $value) == $optionValue ? 'selected' : '' }}>
                     {{ $optionLabel }}

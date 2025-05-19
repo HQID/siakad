@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'Lecturer Details - Academic Information System')
+@section('title', 'Detail Dosen - Sistem Informasi Akademik Universitas Tadulako')
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Lecturer Details</h1>
+    <h1 class="h2">Detail Dosen</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
         <a href="{{ route('lecturers.edit', $lecturer) }}" class="btn btn-sm btn-warning me-2">
             <i class="fas fa-edit me-1"></i> Edit
         </a>
         <a href="{{ route('lecturers.index') }}" class="btn btn-sm btn-secondary">
-            <i class="fas fa-arrow-left me-1"></i> Back to Lecturers
+            <i class="fas fa-arrow-left me-1"></i> Kembali ke Daftar Dosen
         </a>
     </div>
 </div>
@@ -19,7 +19,7 @@
     <div class="col-md-4">
         <x-card>
             <x-slot name="header">
-                <h5 class="mb-0"><i class="fas fa-chalkboard-teacher me-2"></i> Lecturer Profile</h5>
+                <h5 class="mb-0"><i class="fas fa-chalkboard-teacher me-2"></i> Profil Dosen</h5>
             </x-slot>
             
             <div class="text-center mb-4">
@@ -28,7 +28,7 @@
                 </div>
                 <h4>{{ $lecturer->full_name }}</h4>
                 <p class="text-muted mb-1">{{ $lecturer->nip }}</p>
-                <p class="badge bg-primary">{{ $lecturer->academic_degree ?: 'No Degree' }}</p>
+                <p class="badge bg-primary">{{ $lecturer->academic_degree ?: 'Tidak Ada Gelar' }}</p>
             </div>
             
             <ul class="list-group list-group-flush">
@@ -37,20 +37,20 @@
                     <span>{{ $lecturer->user->email }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><i class="fas fa-phone me-2"></i> Phone</span>
-                    <span>{{ $lecturer->phone_number ?: 'Not set' }}</span>
+                    <span><i class="fas fa-phone me-2"></i> Telepon</span>
+                    <span>{{ $lecturer->phone_number ?: 'Belum diatur' }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><i class="fas fa-map-marker-alt me-2"></i> Address</span>
-                    <span>{{ $lecturer->address ?: 'Not set' }}</span>
+                    <span><i class="fas fa-map-marker-alt me-2"></i> Alamat</span>
+                    <span>{{ $lecturer->address ?: 'Belum diatur' }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><i class="fas fa-book me-2"></i> Specialization</span>
-                    <span>{{ $lecturer->specialization ?: 'Not specified' }}</span>
+                    <span><i class="fas fa-book me-2"></i> Spesialisasi</span>
+                    <span>{{ $lecturer->specialization ?: 'Tidak ditentukan' }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><i class="fas fa-graduation-cap me-2"></i> Academic Degree</span>
-                    <span>{{ $lecturer->academic_degree ?: 'Not specified' }}</span>
+                    <span><i class="fas fa-graduation-cap me-2"></i> Gelar Akademik</span>
+                    <span>{{ $lecturer->academic_degree ?: 'Tidak ditentukan' }}</span>
                 </li>
             </ul>
         </x-card>
@@ -59,17 +59,17 @@
     <div class="col-md-8">
         <x-card>
             <x-slot name="header">
-                <h5 class="mb-0"><i class="fas fa-book me-2"></i> Assigned Courses</h5>
+                <h5 class="mb-0"><i class="fas fa-book me-2"></i> Mata Kuliah yang Diampu</h5>
             </x-slot>
             
             <x-table>
                 <x-slot name="header">
-                    <th>Course Code</th>
-                    <th>Course Name</th>
-                    <th>Credits</th>
+                    <th>Kode Mata Kuliah</th>
+                    <th>Nama Mata Kuliah</th>
+                    <th>SKS</th>
                     <th>Semester</th>
-                    <th>Students</th>
-                    <th>Actions</th>
+                    <th>Mahasiswa</th>
+                    <th>Aksi</th>
                 </x-slot>
                 
                 @forelse($lecturer->courses()->withCount('enrollments')->get() as $course)
@@ -87,7 +87,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center">No courses assigned yet.</td>
+                        <td colspan="6" class="text-center">Belum ada mata kuliah yang diampu.</td>
                     </tr>
                 @endforelse
             </x-table>
@@ -95,19 +95,19 @@
         
         <x-card class="mt-4">
             <x-slot name="header">
-                <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i> Schedule</h5>
+                <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i> Jadwal</h5>
             </x-slot>
             
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead class="table-light">
                         <tr>
-                            <th width="15%">Time / Day</th>
-                            <th>Monday</th>
-                            <th>Tuesday</th>
-                            <th>Wednesday</th>
-                            <th>Thursday</th>
-                            <th>Friday</th>
+                            <th width="15%">Waktu / Hari</th>
+                            <th>Senin</th>
+                            <th>Selasa</th>
+                            <th>Rabu</th>
+                            <th>Kamis</th>
+                            <th>Jumat</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -144,7 +144,7 @@
                                                     <div class="p-2 bg-primary text-white rounded">
                                                         <strong>{{ $schedule->course->code }}</strong><br>
                                                         {{ $scheduleStart }} - {{ $scheduleEnd }}<br>
-                                                        Room: {{ $schedule->room }}
+                                                        Ruang: {{ $schedule->room }}
                                                     </div>
                                                 @endif
                                             @endforeach

@@ -23,7 +23,7 @@ use App\Http\Controllers\AuthController;
 
 // Public Routes
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route(auth()->check() ? 'dashboard' : 'login');
 });
 
 // Authentication Routes - These should NOT be inside the auth middleware

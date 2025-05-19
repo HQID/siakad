@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Enrollments</title>
+    <title>Daftar Mata Kuliah</title>
     <style>
         table {
             width: 100%;
@@ -17,18 +17,18 @@
     </style>
 </head>
 <body>
-    <h1>My Enrollments</h1>
+    <h1>Daftar Mata Kuliah</h1>
     <table>
         <thead>
             <tr>
                 <th>#</th>
-                <th>Course Code</th>
-                <th>Course Name</th>
-                <th>Credits</th>
-                <th>Lecturer</th>
+                <th>Kode Mata Kuliah</th>
+                <th>Nama Mata Kuliah</th>
+                <th>SKS</th>
+                <th>Dosen</th>
                 <th>Semester</th>
                 <th>Status</th>
-                <th>Grade</th>
+                <th>Nilai</th>
             </tr>
         </thead>
         <tbody>
@@ -38,10 +38,10 @@
                     <td>{{ $enrollment->course->code }}</td>
                     <td>{{ $enrollment->course->name }}</td>
                     <td>{{ $enrollment->course->credits }}</td>
-                    <td>{{ $enrollment->course->lecturer ? $enrollment->course->lecturer->full_name : 'Not Assigned' }}</td>
+                    <td>{{ $enrollment->course->lecturer ? $enrollment->course->lecturer->full_name : 'Belum Ditentukan' }}</td>
                     <td>{{ $enrollment->semester }} ({{ $enrollment->academic_year }})</td>
                     <td>{{ ucfirst($enrollment->status) }}</td>
-                    <td>{{ $enrollment->grade ? $enrollment->grade->grade_letter : 'Not Graded' }}</td>
+                    <td>{{ $enrollment->grade ? $enrollment->grade->grade_letter : 'Belum Dinilai' }}</td>
                 </tr>
             @endforeach
         </tbody>

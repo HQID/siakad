@@ -17,3 +17,4 @@
         @endif
     </table>
 </div>
+<!-- Sistem Informasi Akademik Universitas Tadulako -->

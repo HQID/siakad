@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'My Enrollments - Academic Information System')
+@section('title', 'Pendaftaran Saya - Sistem Informasi Akademik Universitas Tadulako')
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">My Enrollments</h1>
+    <h1 class="h2">Pendaftaran Saya</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
         <a href="{{ route('enrollments.registration') }}" class="btn btn-sm btn-primary">
-            <i class="fas fa-plus me-1"></i> Register for Courses
+            <i class="fas fa-plus me-1"></i> Daftar Mata Kuliah
         </a>
         <a href="{{ route('enrollments.downloadPdf') }}" class="btn btn-sm btn-secondary ms-2">
-            <i class="fas fa-file-pdf me-1"></i> Download PDF
+            <i class="fas fa-file-pdf me-1"></i> Unduh PDF
         </a>
     </div>
 </div>
@@ -20,7 +20,7 @@
         <form action="{{ route('enrollments.my') }}" method="GET" class="row g-3">
             <div class="col-md-4">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search by course name" name="search" value="{{ request('search') }}">
+                    <input type="text" class="form-control" placeholder="Cari berdasarkan nama mata kuliah" name="search" value="{{ request('search') }}">
                     <button class="btn btn-outline-secondary" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
@@ -28,7 +28,7 @@
             </div>
             <div class="col-md-3">
                 <select name="semester" class="form-select" onchange="this.form.submit()">
-                    <option value="">All Semesters</option>
+                    <option value="">Semua Semester</option>
                     @foreach(auth()->user()->student->enrollments()->select('semester')->distinct()->pluck('semester') as $semester)
                         <option value="{{ $semester }}" {{ request('semester') == $semester ? 'selected' : '' }}>{{ $semester }}</option>
                     @endforeach
@@ -36,10 +36,10 @@
             </div>
             <div class="col-md-3">
                 <select name="status" class="form-select" onchange="this.form.submit()">
-                    <option value="">All Statuses</option>
-                    <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
-                    <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Completed</option>
-                    <option value="dropped" {{ request('status') == 'dropped' ? 'selected' : '' }}>Dropped</option>
+                    <option value="">Semua Status</option>
+                    <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Aktif</option>
+                    <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Selesai</option>
+                    <option value="dropped" {{ request('status') == 'dropped' ? 'selected' : '' }}>Dibatalkan</option>
                 </select>
             </div>
             <div class="col-md-2">
@@ -51,13 +51,13 @@
     <x-table>
         <x-slot name="header">
             <th>#</th>
-            <th>Course Code</th>
-            <th>Course Name</th>
-            <th>Credits</th>
-            <th>Lecturer</th>
+            <th>Kode Mata Kuliah</th>
+            <th>Nama Mata Kuliah</th>
+            <th>SKS</th>
+            <th>Dosen</th>
             <th>Semester</th>
             <th>Status</th>
-            <th>Grade</th>
+            <th>Nilai</th>
         </x-slot>
         
         @forelse($enrollments as $index => $enrollment)
@@ -66,7 +66,7 @@
                 <td>{{ $enrollment->course->code }}</td>
                 <td>{{ $enrollment->course->name }}</td>
                 <td>{{ $enrollment->course->credits }}</td>
-                <td>{{ $enrollment->course->lecturer ? $enrollment->course->lecturer->full_name : 'Not Assigned' }}</td>
+                <td>{{ $enrollment->course->lecturer ? $enrollment->course->lecturer->full_name : 'Belum Ditentukan' }}</td>
                 <td>{{ $enrollment->semester }} ({{ $enrollment->academic_year }})</td>
                 <td>
                     <span class="badge bg-{{ $enrollment->status == 'active' ? 'success' : ($enrollment->status == 'completed' ? 'primary' : 'warning') }}">
@@ -79,13 +79,13 @@
                             {{ $enrollment->grade->grade_letter }} ({{ $enrollment->grade->final_score }})
                         </span>
                     @else
-                        <span class="badge bg-secondary">Not Graded</span>
+                        <span class="badge bg-secondary">Belum Dinilai</span>
                     @endif
                 </td>
             </tr>
         @empty
             <tr>
-                <td colspan="8" class="text-center">No enrollments found.</td>
+                <td colspan="8" class="text-center">Tidak ada pendaftaran ditemukan.</td>
             </tr>
         @endforelse
     </x-table>

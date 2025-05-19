@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Lecturer - Academic Information System')
+@section('title', 'Edit Dosen - Sistem Informasi Akademik Universitas Tadulako')
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Edit Lecturer</h1>
+    <h1 class="h2">Edit Dosen</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
         <a href="{{ route('lecturers.index') }}" class="btn btn-sm btn-secondary">
-            <i class="fas fa-arrow-left me-1"></i> Back to Lecturers
+            <i class="fas fa-arrow-left me-1"></i> Kembali ke Daftar Dosen
         </a>
     </div>
 </div>
@@ -19,49 +19,49 @@
         
         <div class="row">
             <div class="col-md-6">
-                <h5 class="mb-3">Account Information</h5>
+                <h5 class="mb-3">Informasi Akun</h5>
                 
                 <x-form-input 
                     name="name" 
-                    label="Username" 
+                    label="Nama Pengguna" 
                     required="true" 
-                    placeholder="Enter username"
+                    placeholder="Masukkan nama pengguna"
                     :value="$lecturer->user->name"
                 />
                 
                 <x-form-input 
                     name="email" 
-                    label="Email Address" 
+                    label="Alamat Email" 
                     type="email" 
                     required="true" 
-                    placeholder="Enter email address"
+                    placeholder="Masukkan alamat email"
                     :value="$lecturer->user->email"
                 />
                 
                 <x-form-input 
                     name="password" 
-                    label="Password" 
+                    label="Kata Sandi" 
                     type="password" 
-                    placeholder="Leave blank to keep current password"
+                    placeholder="Kosongkan jika tidak ingin mengubah kata sandi"
                 />
             </div>
             
             <div class="col-md-6">
-                <h5 class="mb-3">Lecturer Information</h5>
+                <h5 class="mb-3">Informasi Dosen</h5>
                 
                 <x-form-input 
                     name="nip" 
-                    label="Lecturer ID (NIP)" 
+                    label="NIP Dosen" 
                     required="true" 
-                    placeholder="Enter lecturer ID"
+                    placeholder="Masukkan NIP dosen"
                     :value="$lecturer->nip"
                 />
                 
                 <x-form-input 
                     name="full_name" 
-                    label="Full Name" 
+                    label="Nama Lengkap" 
                     required="true" 
-                    placeholder="Enter full name"
+                    placeholder="Masukkan nama lengkap"
                     :value="$lecturer->full_name"
                 />
                 
@@ -69,8 +69,8 @@
                     <div class="col-md-6">
                         <x-form-input 
                             name="specialization" 
-                            label="Specialization" 
-                            placeholder="e.g. Database Systems"
+                            label="Spesialisasi" 
+                            placeholder="Contoh: Sistem Basis Data"
                             :value="$lecturer->specialization"
                         />
                     </div>
@@ -78,8 +78,8 @@
                     <div class="col-md-6">
                         <x-form-input 
                             name="academic_degree" 
-                            label="Academic Degree" 
-                            placeholder="e.g. Ph.D., M.Sc."
+                            label="Gelar Akademik" 
+                            placeholder="Contoh: Ph.D., M.Sc."
                             :value="$lecturer->academic_degree"
                         />
                     </div>
@@ -89,29 +89,29 @@
         
         <div class="row mt-4">
             <div class="col-md-6">
-                <h5 class="mb-3">Contact Information</h5>
+                <h5 class="mb-3">Informasi Kontak</h5>
                 
                 <x-form-input 
                     name="address" 
-                    label="Address" 
+                    label="Alamat" 
                     type="textarea" 
-                    placeholder="Enter address"
+                    placeholder="Masukkan alamat"
                     :value="$lecturer->address"
                 />
                 
                 <x-form-input 
                     name="phone_number" 
-                    label="Phone Number" 
-                    placeholder="Enter phone number"
+                    label="Nomor Telepon" 
+                    placeholder="Masukkan nomor telepon"
                     :value="$lecturer->phone_number"
                 />
             </div>
         </div>
         
         <div class="d-flex justify-content-end mt-4">
-            <a href="{{ route('lecturers.index') }}" class="btn btn-secondary me-2">Cancel</a>
+            <a href="{{ route('lecturers.index') }}" class="btn btn-secondary me-2">Batal</a>
             <button type="submit" class="btn btn-primary">
-                <i class="fas fa-save me-1"></i> Update Lecturer
+                <i class="fas fa-save me-1"></i> Perbarui Dosen
             </button>
         </div>
     </form>

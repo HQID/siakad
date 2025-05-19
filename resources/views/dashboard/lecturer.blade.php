@@ -12,14 +12,14 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h6 class="card-title">My Courses</h6>
+                        <h6 class="card-title">Mata Kuliah Saya</h6>
                         <h2 class="mb-0">{{ $courseCount }}</h2>
                     </div>
                     <i class="fas fa-book fa-3x opacity-50"></i>
                 </div>
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-                <a href="{{ route('courses.my') }}" class="text-white text-decoration-none small">View Details</a>
+                <a href="{{ route('courses.my') }}" class="text-white text-decoration-none small">Lihat Detail</a>
                 <i class="fas fa-arrow-circle-right text-white"></i>
             </div>
         </div>
@@ -30,14 +30,14 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h6 class="card-title">My Students</h6>
+                        <h6 class="card-title">Mahasiswa Saya</h6>
                         <h2 class="mb-0">{{ $studentCount }}</h2>
                     </div>
                     <i class="fas fa-user-graduate fa-3x opacity-50"></i>
                 </div>
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-                <a href="{{ route('students.my') }}" class="text-white text-decoration-none small">View Details</a>
+                <a href="{{ route('students.my') }}" class="text-white text-decoration-none small">Lihat Detail</a>
                 <i class="fas fa-arrow-circle-right text-white"></i>
             </div>
         </div>
@@ -48,7 +48,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h6 class="card-title">Pending Grades</h6>
+                        <h6 class="card-title">Nilai Belum Diberikan</h6>
                         <h2 class="mb-0">
                             {{ $lecturer ? \App\Models\Enrollment::whereHas('course', function($query) use ($lecturer) {
                                 $query->where('lecturer_id', $lecturer->id);
@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-                <a href="{{ route('grades.index') }}" class="text-white text-decoration-none small">View Details</a>
+                <a href="{{ route('grades.index') }}" class="text-white text-decoration-none small">Lihat Detail</a>
                 <i class="fas fa-arrow-circle-right text-white"></i>
             </div>
         </div>
@@ -70,19 +70,19 @@
     <div class="col-md-12">
         <x-card>
             <x-slot name="header">
-                <h5 class="mb-0"><i class="fas fa-book me-2"></i> My Courses</h5>
+                <h5 class="mb-0"><i class="fas fa-book me-2"></i> Mata Kuliah Saya</h5>
             </x-slot>
             
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Code</th>
-                            <th>Name</th>
-                            <th>Credits</th>
+                            <th>Kode</th>
+                            <th>Nama</th>
+                            <th>SKS</th>
                             <th>Semester</th>
-                            <th>Students</th>
-                            <th>Actions</th>
+                            <th>Mahasiswa</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -103,7 +103,7 @@
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="6" class="text-center">No courses assigned yet.</td>
+                                <td colspan="6" class="text-center">Belum ada mata kuliah yang ditugaskan.</td>
                             </tr>
                         @endif
                     </tbody>
@@ -111,7 +111,7 @@
             </div>
             
             <x-slot name="footer">
-                <a href="{{ route('courses.my') }}" class="btn btn-sm btn-primary">View All My Courses</a>
+                <a href="{{ route('courses.my') }}" class="btn btn-sm btn-primary">Lihat Semua Mata Kuliah Saya</a>
             </x-slot>
         </x-card>
     </div>
@@ -122,7 +122,7 @@
         <x-card>
             <x-slot name="header">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i> Today's Schedule</h5>
+                    <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i> Jadwal Hari Ini</h5>
                     <span class="badge bg-primary">{{ now()->format('l, d F Y') }}</span>
                 </div>
             </x-slot>
@@ -131,9 +131,9 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Course</th>
-                            <th>Time</th>
-                            <th>Room</th>
+                            <th>Mata Kuliah</th>
+                            <th>Waktu</th>
+                            <th>Ruangan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -152,12 +152,12 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="3" class="text-center">No classes scheduled for today.</td>
+                                    <td colspan="3" class="text-center">Tidak ada jadwal untuk hari ini.</td>
                                 </tr>
                             @endforelse
                         @else
                             <tr>
-                                <td colspan="3" class="text-center">No lecturer profile found.</td>
+                                <td colspan="3" class="text-center">Profil dosen tidak ditemukan.</td>
                             </tr>
                         @endif
                     </tbody>

@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'My Grades - Academic Information System')
+@section('title', 'Nilai Saya - Sistem Informasi Akademik Universitas Tadulako')
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">My Grades</h1>
+    <h1 class="h2">Nilai Saya</h1>
 </div>
 
 <x-card>
@@ -12,7 +12,7 @@
         <form action="{{ route('grades.my') }}" method="GET" class="row g-3">
             <div class="col-md-4">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search by course name" name="search" value="{{ request('search') }}">
+                    <input type="text" class="form-control" placeholder="Cari berdasarkan nama mata kuliah" name="search" value="{{ request('search') }}">
                     <button class="btn btn-outline-secondary" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
@@ -20,7 +20,7 @@
             </div>
             <div class="col-md-3">
                 <select name="semester" class="form-select" onchange="this.form.submit()">
-                    <option value="">All Semesters</option>
+                    <option value="">Semua Semester</option>
                     @foreach(auth()->user()->student->enrollments()->select('semester')->distinct()->pluck('semester') as $semester)
                         <option value="{{ $semester }}" {{ request('semester') == $semester ? 'selected' : '' }}>{{ $semester }}</option>
                     @endforeach
@@ -28,7 +28,7 @@
             </div>
             <div class="col-md-3">
                 <select name="academic_year" class="form-select" onchange="this.form.submit()">
-                    <option value="">All Academic Years</option>
+                    <option value="">Semua Tahun Akademik</option>
                     @foreach(auth()->user()->student->enrollments()->select('academic_year')->distinct()->pluck('academic_year') as $year)
                         <option value="{{ $year }}" {{ request('academic_year') == $year ? 'selected' : '' }}>{{ $year }}</option>
                     @endforeach
@@ -43,14 +43,14 @@
     <x-table>
         <x-slot name="header">
             <th>#</th>
-            <th>Course</th>
+            <th>Mata Kuliah</th>
             <th>Semester</th>
-            <th>Academic Year</th>
-            <th>Assignment</th>
-            <th>Mid Exam</th>
-            <th>Final Exam</th>
-            <th>Final Score</th>
-            <th>Grade</th>
+            <th>Tahun Akademik</th>
+            <th>Tugas</th>
+            <th>UTS</th>
+            <th>UAS</th>
+            <th>Nilai Akhir</th>
+            <th>Huruf Mutu</th>
         </x-slot>
         
         @forelse($enrollments as $index => $enrollment)
@@ -69,13 +69,13 @@
                             {{ $enrollment->grade->grade_letter }}
                         </span>
                     @else
-                        <span class="badge bg-secondary">Not Graded</span>
+                        <span class="badge bg-secondary">Belum Dinilai</span>
                     @endif
                 </td>
             </tr>
         @empty
             <tr>
-                <td colspan="9" class="text-center">No grades found.</td>
+                <td colspan="9" class="text-center">Tidak ada nilai ditemukan.</td>
             </tr>
         @endforelse
     </x-table>
@@ -89,7 +89,7 @@
     <div class="col-md-6">
         <x-card>
             <x-slot name="header">
-                <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i> GPA Calculation</h5>
+                <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i> Perhitungan IPK</h5>
             </x-slot>
             
             @php
@@ -121,7 +121,7 @@
                 <div class="col-md-4">
                     <div class="card bg-light">
                         <div class="card-body text-center">
-                            <h6 class="card-title text-muted">Total Credits</h6>
+                            <h6 class="card-title text-muted">Total SKS</h6>
                             <h3 class="mb-0">{{ $totalCredits }}</h3>
                         </div>
                     </div>
@@ -130,7 +130,7 @@
                 <div class="col-md-4">
                     <div class="card bg-light">
                         <div class="card-body text-center">
-                            <h6 class="card-title text-muted">Courses Completed</h6>
+                            <h6 class="card-title text-muted">Mata Kuliah Selesai</h6>
                             <h3 class="mb-0">{{ auth()->user()->student->enrollments()->whereHas('grade')->count() }}</h3>
                         </div>
                     </div>
@@ -139,7 +139,7 @@
                 <div class="col-md-4">
                     <div class="card bg-primary text-white">
                         <div class="card-body text-center">
-                            <h6 class="card-title">GPA</h6>
+                            <h6 class="card-title">IPK</h6>
                             <h3 class="mb-0">{{ $gpa }}</h3>
                         </div>
                     </div>
@@ -151,7 +151,7 @@
     <div class="col-md-6">
         <x-card>
             <x-slot name="header">
-                <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i> Grade Distribution</h5>
+                <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i> Distribusi Nilai</h5>
             </x-slot>
             
             @php
@@ -195,7 +195,7 @@
             @else
                 <div class="text-center py-3">
                     <i class="fas fa-chart-bar fa-3x text-muted mb-3"></i>
-                    <p>No grades have been recorded yet.</p>
+                    <p>Belum ada nilai yang tercatat.</p>
                 </div>
             @endif
         </x-card>

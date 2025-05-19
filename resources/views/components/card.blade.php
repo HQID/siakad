@@ -13,3 +13,4 @@
         </div>
     @endif
 </div>
+<!-- Komponen ini digunakan untuk menampilkan kartu di Sistem Informasi Akademik Universitas Tadulako -->

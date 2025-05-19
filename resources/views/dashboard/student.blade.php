@@ -11,14 +11,14 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h6 class="card-title">Total Courses</h6>
+                        <h6 class="card-title">Total Mata Kuliah</h6>
                         <h2 class="mb-0">{{ $enrollmentCount }}</h2>
                     </div>
                     <i class="fas fa-book fa-3x opacity-50"></i>
                 </div>
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-                <a href="{{ route('enrollments.my') }}" class="text-white text-decoration-none small">View Details</a>
+                <a href="{{ route('enrollments.my') }}" class="text-white text-decoration-none small">Lihat Detail</a>
                 <i class="fas fa-arrow-circle-right text-white"></i>
             </div>
         </div>
@@ -29,14 +29,14 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h6 class="card-title">Completed</h6>
+                        <h6 class="card-title">Selesai</h6>
                         <h2 class="mb-0">{{ $completedCourses }}</h2>
                     </div>
                     <i class="fas fa-check-circle fa-3x opacity-50"></i>
                 </div>
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-                <a href="{{ route('enrollments.my') }}" class="text-white text-decoration-none small">View Details</a>
+                <a href="{{ route('enrollments.my') }}" class="text-white text-decoration-none small">Lihat Detail</a>
                 <i class="fas fa-arrow-circle-right text-white"></i>
             </div>
         </div>
@@ -47,14 +47,14 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h6 class="card-title">Current Semester</h6>
+                        <h6 class="card-title">Semester Saat Ini</h6>
                         <h2 class="mb-0">{{ $currentSemester }}</h2>
                     </div>
                     <i class="fas fa-calendar-alt fa-3x opacity-50"></i>
                 </div>
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-                <span class="text-white text-decoration-none small">Academic Progress</span>
+                <span class="text-white text-decoration-none small">Kemajuan Akademik</span>
                 <i class="fas fa-arrow-circle-right text-white"></i>
             </div>
         </div>
@@ -65,7 +65,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h6 class="card-title">GPA</h6>
+                        <h6 class="card-title">IPK</h6>
                         <h2 class="mb-0">
                             @if($student && $student->enrollments()->whereHas('grade')->count() > 0)
                                 @php
@@ -102,7 +102,7 @@
                 </div>
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-                <a href="{{ route('grades.my') }}" class="text-white text-decoration-none small">View Grades</a>
+                <a href="{{ route('grades.my') }}" class="text-white text-decoration-none small">Lihat Nilai</a>
                 <i class="fas fa-arrow-circle-right text-white"></i>
             </div>
         </div>
@@ -114,7 +114,7 @@
         <x-card>
             <x-slot name="header">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i> Today's Schedule</h5>
+                    <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i> Jadwal Hari Ini</h5>
                     <span class="badge bg-primary">{{ now()->format('l, d F Y') }}</span>
                 </div>
             </x-slot>
@@ -123,10 +123,10 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Course</th>
-                            <th>Time</th>
-                            <th>Room</th>
-                            <th>Lecturer</th>
+                            <th>Mata Kuliah</th>
+                            <th>Waktu</th>
+                            <th>Ruangan</th>
+                            <th>Dosen</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -142,16 +142,16 @@
                                     <td>{{ $schedule->course->name }}</td>
                                     <td>{{ $schedule->start_time->format('H:i') }} - {{ $schedule->end_time->format('H:i') }}</td>
                                     <td>{{ $schedule->room }}</td>
-                                    <td>{{ $schedule->course->lecturer ? $schedule->course->lecturer->full_name : 'Not Assigned' }}</td>
+                                    <td>{{ $schedule->course->lecturer ? $schedule->course->lecturer->full_name : 'Belum Ditentukan' }}</td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="text-center">No classes scheduled for today.</td>
+                                    <td colspan="4" class="text-center">Tidak ada jadwal untuk hari ini.</td>
                                 </tr>
                             @endforelse
                         @else
                             <tr>
-                                <td colspan="4" class="text-center">No student profile found.</td>
+                                <td colspan="4" class="text-center">Profil mahasiswa tidak ditemukan.</td>
                             </tr>
                         @endif
                     </tbody>
@@ -161,17 +161,17 @@
         
         <x-card class="mt-4">
             <x-slot name="header">
-                <h5 class="mb-0"><i class="fas fa-book me-2"></i> Current Enrollments</h5>
+                <h5 class="mb-0"><i class="fas fa-book me-2"></i> Pendaftaran Saat Ini</h5>
             </x-slot>
             
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Course Code</th>
-                            <th>Course Name</th>
-                            <th>Credits</th>
-                            <th>Lecturer</th>
+                            <th>Kode Mata Kuliah</th>
+                            <th>Nama Mata Kuliah</th>
+                            <th>SKS</th>
+                            <th>Dosen</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -191,19 +191,19 @@
                                     <td>{{ $enrollment->course->code }}</td>
                                     <td>{{ $enrollment->course->name }}</td>
                                     <td>{{ $enrollment->course->credits }}</td>
-                                    <td>{{ $enrollment->course->lecturer ? $enrollment->course->lecturer->full_name : 'Not Assigned' }}</td>
+                                    <td>{{ $enrollment->course->lecturer ? $enrollment->course->lecturer->full_name : 'Belum Ditentukan' }}</td>
                                     <td>
                                         <span class="badge bg-success">{{ ucfirst($enrollment->status) }}</span>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="text-center">No active enrollments found.</td>
+                                    <td colspan="5" class="text-center">Tidak ada pendaftaran aktif ditemukan.</td>
                                 </tr>
                             @endforelse
                         @else
                             <tr>
-                                <td colspan="5" class="text-center">No student profile found.</td>
+                                <td colspan="5" class="text-center">Profil mahasiswa tidak ditemukan.</td>
                             </tr>
                         @endif
                     </tbody>
@@ -211,7 +211,7 @@
             </div>
             
             <x-slot name="footer">
-                <a href="{{ route('enrollments.my') }}" class="btn btn-sm btn-primary">View All Enrollments</a>
+                <a href="{{ route('enrollments.my') }}" class="btn btn-sm btn-primary">Lihat Semua Pendaftaran</a>
             </x-slot>
         </x-card>
     </div>
@@ -219,7 +219,7 @@
     <div class="col-md-4">
         <x-card>
             <x-slot name="header">
-                <h5 class="mb-0"><i class="fas fa-user me-2"></i> Student Profile</h5>
+                <h5 class="mb-0"><i class="fas fa-user me-2"></i> Profil Mahasiswa</h5>
             </x-slot>
             
             @if($student)
@@ -238,32 +238,32 @@
                         <span>{{ auth()->user()->email }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><i class="fas fa-phone me-2"></i> Phone</span>
-                        <span>{{ $student->phone_number ?: 'Not set' }}</span>
+                        <span><i class="fas fa-phone me-2"></i> Telepon</span>
+                        <span>{{ $student->phone_number ?: 'Belum diatur' }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><i class="fas fa-calendar me-2"></i> Entry Year</span>
+                        <span><i class="fas fa-calendar me-2"></i> Tahun Masuk</span>
                         <span>{{ $student->entry_year }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><i class="fas fa-venus-mars me-2"></i> Gender</span>
-                        <span>{{ $student->gender ? ucfirst($student->gender) : 'Not set' }}</span>
+                        <span><i class="fas fa-venus-mars me-2"></i> Jenis Kelamin</span>
+                        <span>{{ $student->gender ? ucfirst($student->gender) : 'Belum diatur' }}</span>
                     </li>
                 </ul>
             @else
                 <div class="alert alert-warning">
-                    <i class="fas fa-exclamation-triangle me-2"></i> Student profile not found. Please contact the administrator.
+                    <i class="fas fa-exclamation-triangle me-2"></i> Profil mahasiswa tidak ditemukan. Silakan hubungi administrator.
                 </div>
             @endif
             
             <x-slot name="footer">
-                <a href="#" class="btn btn-sm btn-primary">Edit Profile</a>
+                <a href="#" class="btn btn-sm btn-primary">Edit Profil</a>
             </x-slot>
         </x-card>
         
         <x-card class="mt-4">
             <x-slot name="header">
-                <h5 class="mb-0"><i class="fas fa-star me-2"></i> Recent Grades</h5>
+                <h5 class="mb-0"><i class="fas fa-star me-2"></i> Nilai Terbaru</h5>
             </x-slot>
             
             @if($student)
@@ -290,17 +290,17 @@
                 @else
                     <div class="text-center py-3">
                         <i class="fas fa-star fa-3x text-muted mb-3"></i>
-                        <p>No grades available yet.</p>
+                        <p>Belum ada nilai tersedia.</p>
                     </div>
                 @endif
             @else
                 <div class="alert alert-warning">
-                    <i class="fas fa-exclamation-triangle me-2"></i> Student profile not found.
+                    <i class="fas fa-exclamation-triangle me-2"></i> Profil mahasiswa tidak ditemukan.
                 </div>
             @endif
             
             <x-slot name="footer">
-                <a href="{{ route('grades.my') }}" class="btn btn-sm btn-primary">View All Grades</a>
+                <a href="{{ route('grades.my') }}" class="btn btn-sm btn-primary">Lihat Semua Nilai</a>
             </x-slot>
         </x-card>
     </div>

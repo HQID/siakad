@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Register - Academic Information System')
+@section('title', 'Daftar - Sistem Informasi Akademik Universitas Tadulako')
 
 @section('content')
 <div class="row justify-content-center mt-5">
     <div class="col-md-8 col-lg-6">
         <div class="text-center mb-4">
             <i class="fas fa-university fa-3x text-primary"></i>
-            <h2 class="mt-2">Academic Information System</h2>
-            <p class="text-muted">Create a new account</p>
+            <h2 class="mt-2">Sistem Informasi Akademik Universitas Tadulako</h2>
+            <p class="text-muted">Buat akun baru</p>
         </div>
         
         <x-card>
@@ -19,9 +19,9 @@
                     <div class="col-md-6">
                         <x-form-input 
                             name="name" 
-                            label="Name" 
+                            label="Nama" 
                             required="true" 
-                            placeholder="Enter your name"
+                            placeholder="Masukkan nama Anda"
                             autofocus
                         />
                     </div>
@@ -29,10 +29,10 @@
                     <div class="col-md-6">
                         <x-form-input 
                             name="email" 
-                            label="Email Address" 
+                            label="Alamat Email" 
                             type="email" 
                             required="true" 
-                            placeholder="Enter your email"
+                            placeholder="Masukkan email Anda"
                         />
                     </div>
                 </div>
@@ -41,50 +41,50 @@
                     <div class="col-md-6">
                         <x-form-input 
                             name="password" 
-                            label="Password" 
+                            label="Kata Sandi" 
                             type="password" 
                             required="true" 
-                            placeholder="Enter your password"
+                            placeholder="Masukkan kata sandi Anda"
                         />
                     </div>
                     
                     <div class="col-md-6">
                         <x-form-input 
                             name="password_confirmation" 
-                            label="Confirm Password" 
+                            label="Konfirmasi Kata Sandi" 
                             type="password" 
                             required="true" 
-                            placeholder="Confirm your password"
+                            placeholder="Konfirmasi kata sandi Anda"
                         />
                     </div>
                 </div>
                 
                 <div class="mb-3">
-                    <label class="form-label">Role</label>
+                    <label class="form-label">Peran</label>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="role" id="role_student" value="student" checked>
                         <label class="form-check-label" for="role_student">
-                            Student
+                            Mahasiswa
                         </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="role" id="role_lecturer" value="lecturer">
                         <label class="form-check-label" for="role_lecturer">
-                            Lecturer
+                            Dosen
                         </label>
                     </div>
                 </div>
                 
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-user-plus me-2"></i> Register
+                        <i class="fas fa-user-plus me-2"></i> Daftar
                     </button>
                 </div>
             </form>
         </x-card>
         
         <div class="text-center mt-3">
-            <p>Already have an account? <a href="{{ route('login') }}">Login</a></p>
+            <p>Sudah punya akun? <a href="{{ route('login') }}">Masuk</a></p>
         </div>
     </div>
 </div>
